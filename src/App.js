@@ -1,3 +1,5 @@
+import LifeLine from "./LifeLine";
+
 export default class App {
     constructor(mainEl, navigatorEl, contextEl, maxLifeLines) {
         this.mainEl = mainEl;
@@ -8,7 +10,7 @@ export default class App {
     }
 
     addLifeLine(lifeLine) {
-        if(lifeLine.order === null) {
+        if("undefined" === typeof lifeLine.order || lifeLine.order === null) {
             lifeLine.order = this.lifeLines.length;
         }
         if(lifeLine.order < this.maxLifeLines) {
@@ -36,10 +38,15 @@ export default class App {
             return
         }
 
-        let newOrder = form.elements["order"].options[form.elements["order"].selectedIndex].value - 1;
-        this.deleteLifeLine(lifeLine);
+        if(lifeLine.new !== true) {
+            let newOrder = form.elements["order"].options[form.elements["order"].selectedIndex].value - 1;
+            this.deleteLifeLine(lifeLine);
+            lifeLine.order = newOrder;
+        } else {
+            lifeLine.new = undefined;
+        }
+
         lifeLine.name = newName;
-        lifeLine.order = newOrder;
         this.addLifeLine(lifeLine);
     }
 
@@ -75,10 +82,22 @@ export default class App {
             }.bind(this));
         }
 
+        let addLifeLine = document.createElement("button");
+        addLifeLine.innerText = "Add new LifeLine";
+        addLifeLine.addEventListener("click", function (event) {
+            let newLifeLine = new LifeLine();
+            newLifeLine.name = "";
+            newLifeLine.new = true;
+            newLifeLine.innerEl = this.mainEl;
+            this.renderLifeLineForm(newLifeLine);
+            event.preventDefault();
+        }.bind(this));
+
         while (this.navigatorEl.firstChild) {
             this.navigatorEl.removeChild(this.navigatorEl.firstChild);
         }
         this.navigatorEl.appendChild(navigator);
+        this.navigatorEl.appendChild(addLifeLine);
 
         while (this.contextEl.firstChild) {
             this.contextEl.removeChild(this.contextEl.firstChild);
@@ -86,6 +105,7 @@ export default class App {
     }
 
     renderLifeLineForm(lifeLine) {
+
         let h = "<h2>Update LifeLine</h2>";
         let form = document.createElement("form");
 
@@ -101,30 +121,33 @@ export default class App {
         inputName.required = true;
         form.appendChild(inputName);
 
-        let orderLabel = document.createElement("label");
-        orderLabel.innerText = "LifeLine order:";
-        form.appendChild(orderLabel);
+        if(lifeLine.new !== true) {
+            let orderLabel = document.createElement("label");
+            orderLabel.innerText = "LifeLine order:";
+            form.appendChild(orderLabel);
 
-        let order = document.createElement("select");
-        order.name = "order";
-        for(let i = 1; i <= this.lifeLines.length; i++) {
-            let option = document.createElement("option");
-            option.value = i;
-            option.innerText = i;
-            order.appendChild(option);
-            if(i-1 == lifeLine.order) {
-                option.selected = true;
+            let order = document.createElement("select");
+            order.name = "order";
+            let endIndex = lifeLine.new === true ? this.lifeLines.length + 1 : this.lifeLines.length;
+            for (let i = 1; i <= endIndex; i++) {
+                let option = document.createElement("option");
+                option.value = i;
+                option.innerText = i;
+                order.appendChild(option);
+                if (i - 1 == lifeLine.order) {
+                    option.selected = true;
+                }
+                option.addEventListener("click", function () {
+                    option.selected = true;
+                });
             }
-            option.addEventListener("click", function () {
-               option.selected = true;
-            });
+            form.appendChild(order);
         }
-        form.appendChild(order);
 
         let saveButtonWrapper = document.createElement("div");
         let saveButton = document.createElement("input");
         saveButton.type = "submit";
-        saveButton.value = "Update";
+        saveButton.value = "Save";
         saveButton.addEventListener("click", function (event) {
             this.updateLifeLine(lifeLine, form);
             event.preventDefault();
@@ -132,19 +155,21 @@ export default class App {
         saveButtonWrapper.appendChild(saveButton);
         form.appendChild(saveButtonWrapper);
 
-        let deleteButtonWrapper = document.createElement("div");
-        let deleteButton = document.createElement("input");
-        deleteButton.type = "submit";
-        deleteButton.value = "Delete";
-        deleteButton.addEventListener("click", function (event) {
-            let trulyDelete = confirm("Are you sure you want to delete the timeline?");
-            if(trulyDelete) {
-                this.deleteLifeLine(lifeLine)
-            }
-            event.preventDefault();
-        }.bind(this));
-        deleteButtonWrapper.appendChild(deleteButton);
-        form.appendChild(deleteButtonWrapper);
+        if(lifeLine.new !== true) {
+            let deleteButtonWrapper = document.createElement("div");
+            let deleteButton = document.createElement("input");
+            deleteButton.type = "submit";
+            deleteButton.value = "Delete";
+            deleteButton.addEventListener("click", function (event) {
+                let trulyDelete = confirm("Are you sure you want to delete the timeline?");
+                if (trulyDelete) {
+                    this.deleteLifeLine(lifeLine)
+                }
+                event.preventDefault();
+            }.bind(this));
+            deleteButtonWrapper.appendChild(deleteButton);
+            form.appendChild(deleteButtonWrapper);
+        }
 
         this.contextEl.innerHTML = h;
         this.contextEl.appendChild(form);
