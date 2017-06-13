@@ -1,4 +1,4 @@
-
+import {app} from './App';
 
 export default class LifeLine {
     constructor(name, innerEl, order, lineHeight = 800) {
@@ -24,6 +24,9 @@ export default class LifeLine {
         let lineHead = document.createElement("div");
         lineHead.innerText = ":" + this.name;
         lineHead.classList.add("head");
+        lineHead.addEventListener("click", function () {
+            app.renderLifeLineForm(this);
+        }.bind(this));
         lifeLine.appendChild(lineHead);
 
         let line = document.createElement("div");

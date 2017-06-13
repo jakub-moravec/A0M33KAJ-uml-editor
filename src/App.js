@@ -1,11 +1,11 @@
 import LifeLine from "./LifeLine";
 
 export default class App {
-    constructor(mainEl, navigatorEl, contextEl, maxLifeLines) {
-        this.mainEl = mainEl;
-        this.navigatorEl = navigatorEl;
-        this.contextEl = contextEl;
-        this.maxLifeLines = maxLifeLines;
+    constructor() {
+        this.mainEl = document.getElementById("main");
+        this.navigatorEl = document.getElementById("navigator");
+        this.contextEl =  document.getElementById("context-menu");
+        this.maxLifeLines = 5; // fixme
         this.lifeLines = [];
     }
 
@@ -30,7 +30,7 @@ export default class App {
     updateLifeLine(lifeLine, form) {
         let newName = form.elements["name"].value;
         if(newName == "") {
-            alert("Empty name not allowed!")
+            alert("Empty name not allowed!");
             return;
         }
         if(newName.length > 8) {
@@ -175,3 +175,5 @@ export default class App {
         this.contextEl.appendChild(form);
     }
 }
+
+export let app = new App();
