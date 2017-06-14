@@ -15,8 +15,8 @@ export default class LifeBar {
         bar.style.width = this.width + "px";
         bar.setAttribute("draggable", "true");
         bar.classList.add("bar");
-        bar.addEventListener("drag", function (event) {
-            this.drag(event);
+        bar.addEventListener("drag", function () {
+            this.lifeLine.draggedBar = this;
         }.bind(this));
         bar.addEventListener("dragstart", function (event) {
            this.dragStartY = event.clientY;
@@ -37,10 +37,4 @@ export default class LifeBar {
             this.actions[i].render();
         }
     }
-
-    drag(event) {
-        this.lifeLine.draggedBar = this;
-    }
-
-
 }

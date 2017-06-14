@@ -69,7 +69,7 @@ export default class LifeLine {
         line.style.height = this.lineHeight+"px";
         line.classList.add("line");
         line.addEventListener("dragover", function (event) {
-            this.allowDrop(event);
+            event.preventDefault();
         }.bind(this));
         line.addEventListener("drop", function (event) {
             event.preventDefault();
@@ -90,10 +90,6 @@ export default class LifeLine {
         addBar.style.top = (lineHead.offsetHeight + this.lineHeight + addBar.offsetHeight) + "px" ;
         addBar.style.left = (lineHead.offsetWidth / 2 - addBar.offsetWidth/2)  + "px";
 
-    }
-
-    allowDrop (event) {
-        event.preventDefault();
     }
 
     handleDrop(event) {
