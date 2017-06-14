@@ -5,11 +5,14 @@ body {
 
 .page {
     display: flex;
+    display: -ms-flexbox;
     flex-direction: column;
+    -ms-flex-direction: column;
     min-height: 100vh;
 }
 .page header {
     display: flex;
+    display: -ms-flexbox;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -19,6 +22,7 @@ body {
 
 .page nav {
     display: flex;
+    display: -ms-flexbox;
     align-items: center;
     justify-content: center;
     width: 100%;
@@ -29,14 +33,17 @@ body {
 
 .page section {
     display: flex;
-    flex-grow: 1;
+    display: -ms-flexbox;
+    flex: 1 auto;
     min-height: 400px;
 }
 
 .page section main {
     display: flex;
-    flex-grow: 1;
+    display: -ms-flexbox;
+    flex: 1 auto;
     flex-direction: column;
+    -ms-flex-direction: column;
     background: lightgreen;
 }
 
@@ -45,9 +52,11 @@ body {
     width: 200px;
     padding: 1em;
     box-sizing: border-box;
+    -ms-box-sizing: border-box;
 }
 .page footer {
     display: flex;
+    display: -ms-flexbox;
     align-items: center;
     justify-content: center;
     height: 20px;
@@ -77,13 +86,39 @@ div.lifeline div.head {
 
 div.lifeline div.line{
     position: absolute;
-    border-left: dashed black 2px;
+    border-left: dashed black 4px;
+}
+
+div.lifeline div.lineDropper{
+    position: absolute;
 }
 
 div.lifeline div.bar {
     position: absolute;
     border: solid black 3px;
     background-color: darkgray;
+    cursor: pointer;
+}
+
+div.lifeline div.addBar, div.bar div.removeBar {
+    width: 10px;
+    height: 10px;
+    cursor: pointer;
+    position: absolute;
+}
+
+div.lifeline div.addBar{
+    background-color:  greenyellow;
+}
+
+div.bar div.removeBar{
+    background-color: red;
+}
+
+div.bar div.resizeBar{
+    background-color: blue;
+    position: absolute;
+    cursor: ns-resize;
 }
 
 /*navigator*/
