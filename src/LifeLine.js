@@ -68,14 +68,21 @@ export default class LifeLine {
         line.style.top = lineHead.offsetHeight + "px";
         line.style.height = this.lineHeight+"px";
         line.classList.add("line");
-        line.addEventListener("dragover", function (event) {
+        lifeLine.appendChild(line);
+
+        let dropper = document.createElement("div");
+        dropper.style.top = lineHead.offsetHeight + "px";
+        dropper.style.height = this.lineHeight+"px";
+        dropper.style.width = lineHead.offsetWidth + "px";
+        dropper.classList.add("lineDropper");
+        dropper.addEventListener("dragover", function (event) {
             event.preventDefault();
         }.bind(this));
-        line.addEventListener("drop", function (event) {
+        dropper.addEventListener("drop", function (event) {
             event.preventDefault();
             this.handleDrop(event);
         }.bind(this));
-        lifeLine.appendChild(line);
+        lifeLine.appendChild(dropper);
 
         for (let i = 0; i < this.lineBars.length; i++) {
             this.lineBars[i].render(lineHead.offsetWidth/2, lineHead.offsetHeight);
@@ -93,7 +100,8 @@ export default class LifeLine {
     }
 
     handleDrop(event) {
-        if("undefined" !== typeof this.draggedBar && this.draggedBar !== null) {
+        if("undefined" !== typeof this.draggedBar && this.draggedBar !== null && ("undefined" === typeof this.draggedBarResizer || this.draggedBarResizer === null)) {
+            console.log("move");
             let dragEnd = event.clientY;
             let newBeginning = this.draggedBar.beginning + dragEnd -this.draggedBar.dragStartY;
             if(newBeginning + this.draggedBar.duration <= this.lineHeight && newBeginning > 0) {
@@ -102,6 +110,20 @@ export default class LifeLine {
             } else {
                 alert("Bar moved out of line!");
             }
+            this.draggedBar = null;
+        }
+
+        if("undefined" !== typeof this.draggedBarResizer && this.draggedBarResizer !== null) {
+            console.log("resize");
+            let dragEnd = event.clientY;
+            let newDuration = this.draggedBarResizer.duration + dragEnd -this.draggedBarResizer.dragStartY;
+            if(this.draggedBarResizer.beginning + newDuration <= this.lineHeight && newDuration > 5) {
+                this.draggedBarResizer.duration = newDuration;
+                app.render();
+            } else {
+                alert("Bar duration to high or to low!");
+            }
+            this.draggedBarResizer = null;
         }
     }
 }

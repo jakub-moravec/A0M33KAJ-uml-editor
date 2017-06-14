@@ -21,6 +21,13 @@ export default class LifeBar {
         bar.addEventListener("dragstart", function (event) {
            this.dragStartY = event.clientY;
         }.bind(this));
+        bar.addEventListener("dragover", function (event) {
+            event.preventDefault();
+        }.bind(this));
+        bar.addEventListener("drop", function (event) {
+            event.preventDefault();
+            this.lifeLine.handleDrop(event);
+        }.bind(this));
         this.lifeLine.el.appendChild(bar);
         this.el = bar;
 
@@ -32,6 +39,20 @@ export default class LifeBar {
         bar.appendChild(removeBar);
         removeBar.style.top = -(removeBar.offsetHeight / 2) + "px" ;
         removeBar.style.left = (bar.offsetWidth / 2 - removeBar.offsetWidth)  + "px";
+
+        let resizeBar = document.createElement("div");
+        resizeBar.classList.add("resizeBar");
+        resizeBar.setAttribute("draggable", "true");
+        resizeBar.addEventListener("drag", function () {
+            this.lifeLine.draggedBarResizer = this;
+        }.bind(this));
+        resizeBar.addEventListener("dragstart", function (event) {
+            this.dragStartY = event.clientY;
+        }.bind(this));
+        resizeBar.style.height = 5 + "px" ;//bar.style.borderBottomWidth;
+        resizeBar.style.width = bar.style.width;
+        resizeBar.style.top = bar.style.height;
+        bar.appendChild(resizeBar);
 
         for (let i = 0; i < this.actions.length; i++) {
             this.actions[i].render();

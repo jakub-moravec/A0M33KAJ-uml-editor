@@ -80,6 +80,10 @@ div.lifeline div.line{
     border-left: dashed black 4px;
 }
 
+div.lifeline div.lineDropper{
+    position: absolute;
+}
+
 div.lifeline div.bar {
     position: absolute;
     border: solid black 3px;
@@ -100,6 +104,12 @@ div.lifeline div.addBar{
 
 div.bar div.removeBar{
     background-color: red;
+}
+
+div.bar div.resizeBar{
+    background-color: blue;
+    position: absolute;
+    cursor: ns-resize;
 }
 
 /*navigator*/
