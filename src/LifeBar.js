@@ -15,7 +15,14 @@ export default class LifeBar {
         bar.style.width = this.width + "px";
         bar.setAttribute("draggable", "true");
         bar.classList.add("bar");
+        bar.addEventListener("drag", function (event) {
+            this.drag(event);
+        }.bind(this));
+        bar.addEventListener("dragstart", function (event) {
+           this.dragStartY = event.clientY;
+        }.bind(this));
         this.lifeLine.el.appendChild(bar);
+        this.el = bar;
 
         let removeBar = document.createElement("div");
         removeBar.classList.add("removeBar");
@@ -29,6 +36,10 @@ export default class LifeBar {
         for (let i = 0; i < this.actions.length; i++) {
             this.actions[i].render();
         }
+    }
+
+    drag(event) {
+        this.lifeLine.draggedBar = this;
     }
 
 

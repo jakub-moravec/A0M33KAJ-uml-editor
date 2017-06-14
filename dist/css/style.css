@@ -77,13 +77,14 @@ div.lifeline div.head {
 
 div.lifeline div.line{
     position: absolute;
-    border-left: dashed black 2px;
+    border-left: dashed black 4px;
 }
 
 div.lifeline div.bar {
     position: absolute;
     border: solid black 3px;
     background-color: darkgray;
+    cursor: pointer;
 }
 
 div.lifeline div.addBar, div.bar div.removeBar {

@@ -68,6 +68,13 @@ export default class LifeLine {
         line.style.top = lineHead.offsetHeight + "px";
         line.style.height = this.lineHeight+"px";
         line.classList.add("line");
+        line.addEventListener("dragover", function (event) {
+            this.allowDrop(event);
+        }.bind(this));
+        line.addEventListener("drop", function (event) {
+            event.preventDefault();
+            this.handleDrop(event);
+        }.bind(this));
         lifeLine.appendChild(line);
 
         for (let i = 0; i < this.lineBars.length; i++) {
@@ -85,5 +92,20 @@ export default class LifeLine {
 
     }
 
+    allowDrop (event) {
+        event.preventDefault();
+    }
 
+    handleDrop(event) {
+        if("undefined" !== typeof this.draggedBar && this.draggedBar !== null) {
+            let dragEnd = event.clientY;
+            let newBeginning = this.draggedBar.beginning + dragEnd -this.draggedBar.dragStartY;
+            if(newBeginning + this.draggedBar.duration <= this.lineHeight && newBeginning > 0) {
+                this.draggedBar.beginning = newBeginning;
+                app.render();
+            } else {
+                alert("Bar moved out of line!");
+            }
+        }
+    }
 }
