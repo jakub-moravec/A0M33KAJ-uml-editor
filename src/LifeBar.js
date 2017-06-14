@@ -17,8 +17,19 @@ export default class LifeBar {
         bar.classList.add("bar");
         this.lifeLine.el.appendChild(bar);
 
+        let removeBar = document.createElement("div");
+        removeBar.classList.add("removeBar");
+        removeBar.addEventListener("click", function () {
+            this.lifeLine.removeBar(this.beginning, this.duration);
+        }.bind(this));
+        bar.appendChild(removeBar);
+        removeBar.style.top = -(removeBar.offsetHeight / 2) + "px" ;
+        removeBar.style.left = (bar.offsetWidth / 2 - removeBar.offsetWidth)  + "px";
+
         for (let i = 0; i < this.actions.length; i++) {
             this.actions[i].render();
         }
     }
+
+
 }

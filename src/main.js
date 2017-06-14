@@ -7,6 +7,31 @@ import Action from './Action';
 // Enum for action stereotypes.
 const ActionStereotype = Object.freeze({"synchronous":1, "asynchronous":2});
 
+// function allowDrop(event) {
+//     event.preventDefault();
+// }
+//
+// function drag(event) {
+//     let bar = event.target.classList.contains("bar");
+//     if(bar === true) {
+//         event.dataTransfer.setData("class", "bar");
+//     }
+//     event.dataTransfer.setData("source", event.target);
+// }
+//
+// function drop(event) {
+//     event.preventDefault();
+//     let clazz = event.dataTransfer.getData("class");
+//     let target = event.target;
+//     let source = event.dataTransfer.getData("source");
+//
+//
+//
+//     event.target.appendChild(document.getElementById(clazz));
+// }
+
+
+
 let lifeLine1 = new LifeLine("test1", app.mainEl, 0);
 let bars = [new LifeBar(lifeLine1, 10, 50), new LifeBar(lifeLine1, 70, 100)];
 lifeLine1.lineBars = bars;

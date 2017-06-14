@@ -1,4 +1,5 @@
 import {app} from './App';
+import LifeBar from "./LifeBar";
 
 export default class LifeLine {
     constructor(name, innerEl, order, lineHeight = 800) {
@@ -9,6 +10,39 @@ export default class LifeLine {
         this.order = order;
         this.maxWidth = 160;
         this.topOffset = 50;
+        this.initialBarOffset = 30;
+        this.initialBarDuration = 50;
+    }
+
+    _getMaxEndBar() {
+        let maxBarEnd = 0;
+        for(let i = 0; i < this.lineBars.length; i++){
+            let barEnd = this.lineBars[i].beginning + this.lineBars[i].duration;
+            if(barEnd > maxBarEnd) {
+                maxBarEnd = barEnd;
+            }
+        }
+        return maxBarEnd;
+    }
+
+    addBar() {
+        let beginning = this._getMaxEndBar() + this.initialBarOffset;
+        if (beginning + this.initialBarDuration <= this.lineHeight) {
+            this.lineBars.push(new LifeBar(this, beginning, this.initialBarDuration));
+            app.render();
+        } else {
+            alert("This line contains already to much bars!");
+        }
+    }
+
+    removeBar(beginning, duration) {
+        for(let i = 0; i < this.lineBars.length; i++){
+            if(this.lineBars[i].beginning == beginning && this.lineBars[i].duration == duration) {
+                this.lineBars.splice(i, 1);
+                app.render();
+                return;
+            }
+        }
     }
 
     render() {
@@ -39,6 +73,16 @@ export default class LifeLine {
         for (let i = 0; i < this.lineBars.length; i++) {
             this.lineBars[i].render(lineHead.offsetWidth/2, lineHead.offsetHeight);
         }
+
+        let addBar = document.createElement("div");
+        addBar.classList.add("addBar");
+        addBar.addEventListener("click", function () {
+            this.addBar();
+        }.bind(this));
+        lifeLine.appendChild(addBar);
+        addBar.style.top = (lineHead.offsetHeight + this.lineHeight + addBar.offsetHeight) + "px" ;
+        addBar.style.left = (lineHead.offsetWidth / 2 - addBar.offsetWidth/2)  + "px";
+
     }
 
 
