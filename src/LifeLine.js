@@ -102,7 +102,6 @@ export default class LifeLine {
 
     handleDrop(event) {
         if("undefined" !== typeof this.draggedBar && this.draggedBar !== null && ("undefined" === typeof this.draggedBarResizer || this.draggedBarResizer === null)) {
-            console.log("move");
             let dragEnd = event.clientY;
             let newBeginning = this.draggedBar.beginning + dragEnd -this.draggedBar.dragStartY;
             if(newBeginning + this.draggedBar.duration <= this.lineHeight && newBeginning > 0) {
@@ -115,7 +114,6 @@ export default class LifeLine {
         }
 
         if("undefined" !== typeof this.draggedBarResizer && this.draggedBarResizer !== null) {
-            console.log("resize");
             let dragEnd = event.clientY;
             let newDuration = this.draggedBarResizer.duration + dragEnd -this.draggedBarResizer.dragStartY;
             if(this.draggedBarResizer.beginning + newDuration <= this.lineHeight && newDuration > 5) {

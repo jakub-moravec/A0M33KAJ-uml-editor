@@ -1,5 +1,5 @@
 
-export const ActionStereotype = Object.freeze({"synchronous":1, "asynchronous":2});
+export const ActionStereotype = Object.freeze({"synchronous": "synchronous", "asynchronous": "asynchronous"});
 
 export default class Action {
 

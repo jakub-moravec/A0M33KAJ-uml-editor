@@ -7,6 +7,8 @@ export default class App {
         this.contextEl =  document.getElementById("context-menu");
         this.maxLifeLines = 5; // fixme
         this.lifeLines = [];
+        this.newActionStart = null;
+        this.newActionEnd = null;
     }
 
     addLifeLine(lifeLine) {
@@ -161,10 +163,7 @@ export default class App {
             deleteButton.type = "submit";
             deleteButton.value = "Delete";
             deleteButton.addEventListener("click", function (event) {
-                let trulyDelete = confirm("Are you sure you want to delete the timeline?");
-                if (trulyDelete) {
-                    this.deleteLifeLine(lifeLine)
-                }
+
                 event.preventDefault();
             }.bind(this));
             deleteButtonWrapper.appendChild(deleteButton);
