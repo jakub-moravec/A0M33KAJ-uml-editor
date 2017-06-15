@@ -89,11 +89,12 @@ export default class LifeLine {
         }
 
         let addBar = document.createElement("div");
-        addBar.classList.add("addBar");
+        addBar.classList.add("addButton");
         addBar.addEventListener("click", function () {
             this.addBar();
         }.bind(this));
         lifeLine.appendChild(addBar);
+        addBar.title = "Add bar";
         addBar.style.top = (lineHead.offsetHeight + this.lineHeight + addBar.offsetHeight) + "px" ;
         addBar.style.left = (lineHead.offsetWidth / 2 - addBar.offsetWidth/2)  + "px";
 

@@ -52,7 +52,6 @@ body {
     width: 200px;
     padding: 1em;
     box-sizing: border-box;
-    -ms-box-sizing: border-box;
 }
 .page footer {
     display: flex;
@@ -100,25 +99,39 @@ div.lifeline div.bar {
     cursor: pointer;
 }
 
-div.lifeline div.addBar, div.bar div.removeBar {
-    width: 10px;
-    height: 10px;
+.addButton, .removeButton, .resizeButton {
+    margin-left: 4px;
+    width: 15px;
+    height: 15px;
     cursor: pointer;
     position: absolute;
 }
 
-div.lifeline div.addBar{
-    background-color:  greenyellow;
+.addButton {
+    margin-left: 2px;
+    background: url("../img/add-button.png");
+    background-size: 100%;
 }
 
-div.bar div.removeBar{
-    background-color: red;
+.removeButton{
+    background: url("../img/remove-button.png");
+    background-size: 100%;
+}
+
+.resizeButton{
+    background: url("../img/resize-button.png");
+    background-size: 100%;
 }
 
 div.bar div.resizeBar{
     background-color: blue;
     position: absolute;
     cursor: ns-resize;
+}
+
+/*action*/
+svg{
+    position: absolute;
 }
 
 /*navigator*/
