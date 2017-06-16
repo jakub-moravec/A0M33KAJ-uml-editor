@@ -10,18 +10,12 @@ export default class Action {
         this.source = source;
         this.target = target;
         this.name = name;
-        this.nameEl = null;
-        this.nameForm = null;
         this.stereotype = stereotype;
         this.arrowSize = 10;
     }
 
     render() {
         let width = Math.abs(this.source.lifeLine.order - this.target.lifeLine.order) * this.source.lifeLine.maxWidth;
-
-        console.log(this.target.el.offsetLeft);
-
-
         let action = document.createElement("div");
         action.classList.add("action");
         action.style.top = this.beginning - Math.floor(this.arrowSize / 2) + "px";
@@ -32,9 +26,6 @@ export default class Action {
         action.addEventListener("dragstart", function (event) {
             this.dragStartY = event.clientY;
         }.bind(this));
-        action.addEventListener("dragover", function (event) {
-            event.preventDefault();
-        }.bind(this));
         action.addEventListener("click", function () {
             this.source.renderActionForm(this);
         }.bind(this));
@@ -42,7 +33,7 @@ export default class Action {
         let arrow = document.createElement("div");
 
         let actionLine = document.createElement("div");
-        if(action.stereotype === ActionStereotype.synchronous) {
+        if(this.stereotype === ActionStereotype.synchronous) {
             actionLine.classList.add("synchronous-line");
         } else {
             actionLine.classList.add("asynchronous-line");
@@ -91,5 +82,14 @@ export default class Action {
         removeBar.style.width = 12 + "px";
 
         this.source.el.appendChild(action);
+    }
+
+    handleDrop(event) {
+        let diff = event.clientY - this.dragStartY;
+        let newBeginning = this.beginning + diff;
+        if(newBeginning >= 0 && newBeginning <= this.source.duration) {
+            this.beginning = newBeginning;
+            app.render();
+        }
     }
 }

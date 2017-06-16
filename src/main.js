@@ -5,6 +5,10 @@ import LifeBar from './LifeBar';
 import Action from './Action';
 import {ActionStereotype} from './Action';
 
+window.addEventListener("resize", function() {
+    app.render();
+});
+
 let lifeLine1 = new LifeLine("test1", app.mainEl, 0);
 let lifeLine2 = new LifeLine("test2", app.mainEl, 1);
 let lifeLine3 = new LifeLine("test3", app.mainEl, 2);

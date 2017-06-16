@@ -5,7 +5,7 @@ export default class App {
         this.mainEl = document.getElementById("main");
         this.navigatorEl = document.getElementById("navigator");
         this.contextEl =  document.getElementById("context-menu");
-        this.maxLifeLines = 5; // fixme
+        this.maxLifeLines = 5;
         this.lifeLines = [];
         this.newActionStart = null;
         this.newActionEnd = null;
@@ -70,6 +70,17 @@ export default class App {
         while (this.mainEl.firstChild) {
             this.mainEl.removeChild(this.mainEl.firstChild);
         }
+
+        this.mainEl.addEventListener("dragover", function (event) {
+            event.preventDefault();
+        });
+        this.mainEl.addEventListener("drop", function (event) {
+            event.preventDefault();
+            if ("undefined" != typeof this.draggedAction && this.draggedAction !== null) {
+                this.draggedAction.handleDrop(event);
+                this.draggedAction = null;
+            }
+        }.bind(this));
 
         let navigator = document.createElement("ol");
         for (let i = 0; i < this.lifeLines.length; i++) {

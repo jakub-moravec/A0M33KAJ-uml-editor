@@ -2,9 +2,8 @@ import {app} from './App';
 import LifeBar from "./LifeBar";
 
 export default class LifeLine {
-    constructor(name, innerEl, order, lineHeight = 800) {
+    constructor(name, innerEl, order) {
         this.name = name;
-        this.lineHeight = lineHeight;
         this.innerEl = innerEl;
         this.lineBars = [];
         this.order = order;
@@ -66,7 +65,8 @@ export default class LifeLine {
         let line = document.createElement("div");
         line.style.left = (lineHead.offsetWidth / 2)  + "px";
         line.style.top = lineHead.offsetHeight + "px";
-        line.style.height = this.lineHeight+"px";
+        this.lineHeight = app.mainEl.offsetHeight - 150;
+        line.style.height = this.lineHeight +"px";
         line.classList.add("line");
         lifeLine.appendChild(line);
 

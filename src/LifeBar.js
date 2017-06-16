@@ -158,7 +158,10 @@ export default class LifeBar {
                 // this is click to second bar
                 if("undefined" == typeof app.newActionStart || app.newActionStart === null) {
                     app.newActionStart = this;
-                    this.newActionBeginning = event.clientY - this.el.offsetTop;
+                    let approxY = event.clientY - this.el.getBoundingClientRect.top;
+                    approxY = Math.max(0, approxY);
+                    approxY = Math.min(this.duration, approxY);
+                    this.newActionBeginning = approxY;
                 } else {
                     app.newActionEnd = this;
                     app.newActionStart.createNewAction();
