@@ -101,7 +101,9 @@ export default class LifeLine {
     }
 
     handleDrop(event) {
-        if("undefined" !== typeof this.draggedBar && this.draggedBar !== null && ("undefined" === typeof this.draggedBarResizer || this.draggedBarResizer === null)) {
+        if("undefined" != typeof this.draggedBar && this.draggedBar !== null
+            && ("undefined" == typeof this.draggedBarResizer || this.draggedBarResizer === null)
+            && ("undefined" == typeof app.draggedAction || app.draggedAction === null)) {
             let dragEnd = event.clientY;
             let newBeginning = this.draggedBar.beginning + dragEnd -this.draggedBar.dragStartY;
             if(newBeginning + this.draggedBar.duration <= this.lineHeight && newBeginning > 0) {
@@ -116,7 +118,7 @@ export default class LifeLine {
         if("undefined" !== typeof this.draggedBarResizer && this.draggedBarResizer !== null) {
             let dragEnd = event.clientY;
             let newDuration = this.draggedBarResizer.duration + dragEnd -this.draggedBarResizer.dragStartY;
-            if(this.draggedBarResizer.beginning + newDuration <= this.lineHeight && newDuration > 5) {
+            if(this.draggedBarResizer.beginning + newDuration <= this.lineHeight && newDuration > 15) {
                 this.draggedBarResizer.duration = newDuration;
                 app.render();
             } else {

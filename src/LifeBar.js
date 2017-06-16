@@ -12,6 +12,9 @@ export default class LifeBar {
     }
 
     createNewAction(){
+        if(this === app.newActionEnd) {
+            return;
+        }
         let action = new Action(this.newActionBeginning, this, app.newActionEnd, null, null);
         action.new = true;
         app.newActionStart = null;
@@ -43,17 +46,18 @@ export default class LifeBar {
             action.name = newName;
             action.new = false;
             this.actions.push(action);
-            app.render();
         } else {
             let index = this.actions.indexOf(action);
             action.stereotype = newStereotype;
             action.name = newName;
             this.actions.splice(index, 1, action);
         }
+        app.render();
     }
 
     deleteAction(action) {
         this.actions.splice(this.actions.indexOf(action), 1);
+        app.render();
     }
 
     renderActionForm(action) {
@@ -110,20 +114,18 @@ export default class LifeBar {
         saveButtonWrapper.appendChild(saveButton);
         form.appendChild(saveButtonWrapper);
 
-        if(action.new !== true) {
-            let cancelButtonWrapper = document.createElement("div");
-            let cancelButton = document.createElement("input");
-            cancelButton.type = "submit";
-            cancelButton.value = "Cancel";
-            cancelButton.addEventListener("click", function (event) {
-                while (app.contextEl.firstChild) {
-                    app.contextEl.removeChild(app.contextEl.firstChild);
-                }
-                event.preventDefault();
-            }.bind(this));
-            cancelButtonWrapper.appendChild(cancelButton);
-            form.appendChild(cancelButtonWrapper);
-        }
+        let cancelButtonWrapper = document.createElement("div");
+        let cancelButton = document.createElement("input");
+        cancelButton.type = "submit";
+        cancelButton.value = "Cancel";
+        cancelButton.addEventListener("click", function (event) {
+            while (app.contextEl.firstChild) {
+                app.contextEl.removeChild(app.contextEl.firstChild);
+            }
+            event.preventDefault();
+        }.bind(this));
+        cancelButtonWrapper.appendChild(cancelButton);
+        form.appendChild(cancelButtonWrapper);
 
         app.contextEl.innerHTML = h;
         app.contextEl.appendChild(form);
@@ -152,13 +154,15 @@ export default class LifeBar {
         }.bind(this));
         // create new action
         bar.addEventListener("click", function (event) {
-            // this is click to second bar
-            if("undefined" == typeof app.newActionStart || app.newActionStart === null) {
-                app.newActionStart = this;
-                this.newActionBeginning = event.clientY - this.el.offsetTop;
-            } else {
-                app.newActionEnd = this;
-                app.newActionStart.createNewAction();
+            if(event.target.classList.contains("bar")) {
+                // this is click to second bar
+                if("undefined" == typeof app.newActionStart || app.newActionStart === null) {
+                    app.newActionStart = this;
+                    this.newActionBeginning = event.clientY - this.el.offsetTop;
+                } else {
+                    app.newActionEnd = this;
+                    app.newActionStart.createNewAction();
+                }
             }
         }.bind(this));
 

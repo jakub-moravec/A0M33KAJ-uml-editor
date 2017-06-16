@@ -97,6 +97,7 @@ div.lifeline div.bar {
     border: solid black 3px;
     background-color: darkgray;
     cursor: pointer;
+    overflow: visible;
 }
 
 .addButton, .removeButton, .resizeButton {
@@ -130,10 +131,48 @@ div.bar div.resizeBar{
 }
 
 /*action*/
-svg{
+.action{
     position: absolute;
+    height: auto;
+    width: auto;
 }
 
+.action-name{
+    position: absolute;
+    top: -10px;
+    left: 20px;
+}
+
+.synchronous-line, .asynchronous-line{
+    position: absolute;
+    height: 1px;
+}
+
+.synchronous-line {
+    border-top: solid 3px black;
+}
+
+.asynchronous-line {
+    border-top: dashed 3px black;
+}
+
+.arrow-left, .arrow-right{
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.arrow-right {
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid black;
+}
+
+.arrow-left{
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right:10px solid black;
+}
 /*navigator*/
 
 #navigator ol li {
