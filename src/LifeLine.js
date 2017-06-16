@@ -2,9 +2,8 @@ import {app} from './App';
 import LifeBar from "./LifeBar";
 
 export default class LifeLine {
-    constructor(name, innerEl, order, lineHeight = 800) {
+    constructor(name, innerEl, order) {
         this.name = name;
-        this.lineHeight = lineHeight;
         this.innerEl = innerEl;
         this.lineBars = [];
         this.order = order;
@@ -66,7 +65,8 @@ export default class LifeLine {
         let line = document.createElement("div");
         line.style.left = (lineHead.offsetWidth / 2)  + "px";
         line.style.top = lineHead.offsetHeight + "px";
-        line.style.height = this.lineHeight+"px";
+        this.lineHeight = app.mainEl.offsetHeight - 150;
+        line.style.height = this.lineHeight +"px";
         line.classList.add("line");
         lifeLine.appendChild(line);
 
@@ -89,19 +89,21 @@ export default class LifeLine {
         }
 
         let addBar = document.createElement("div");
-        addBar.classList.add("addBar");
+        addBar.classList.add("addButton");
         addBar.addEventListener("click", function () {
             this.addBar();
         }.bind(this));
         lifeLine.appendChild(addBar);
+        addBar.title = "Add bar";
         addBar.style.top = (lineHead.offsetHeight + this.lineHeight + addBar.offsetHeight) + "px" ;
         addBar.style.left = (lineHead.offsetWidth / 2 - addBar.offsetWidth/2)  + "px";
 
     }
 
     handleDrop(event) {
-        if("undefined" !== typeof this.draggedBar && this.draggedBar !== null && ("undefined" === typeof this.draggedBarResizer || this.draggedBarResizer === null)) {
-            console.log("move");
+        if("undefined" != typeof this.draggedBar && this.draggedBar !== null
+            && ("undefined" == typeof this.draggedBarResizer || this.draggedBarResizer === null)
+            && ("undefined" == typeof app.draggedAction || app.draggedAction === null)) {
             let dragEnd = event.clientY;
             let newBeginning = this.draggedBar.beginning + dragEnd -this.draggedBar.dragStartY;
             if(newBeginning + this.draggedBar.duration <= this.lineHeight && newBeginning > 0) {
@@ -114,10 +116,9 @@ export default class LifeLine {
         }
 
         if("undefined" !== typeof this.draggedBarResizer && this.draggedBarResizer !== null) {
-            console.log("resize");
             let dragEnd = event.clientY;
             let newDuration = this.draggedBarResizer.duration + dragEnd -this.draggedBarResizer.dragStartY;
-            if(this.draggedBarResizer.beginning + newDuration <= this.lineHeight && newDuration > 5) {
+            if(this.draggedBarResizer.beginning + newDuration <= this.lineHeight && newDuration > 15) {
                 this.draggedBarResizer.duration = newDuration;
                 app.render();
             } else {

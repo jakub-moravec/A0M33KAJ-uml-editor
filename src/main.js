@@ -3,26 +3,33 @@ import {app} from './App';
 import LifeLine from './LifeLine';
 import LifeBar from './LifeBar';
 import Action from './Action';
+import {ActionStereotype} from './Action';
 
-// Enum for action stereotypes.
-const ActionStereotype = Object.freeze({"synchronous":1, "asynchronous":2});
+window.addEventListener("resize", function() {
+    app.render();
+});
 
 let lifeLine1 = new LifeLine("test1", app.mainEl, 0);
-let bars = [new LifeBar(lifeLine1, 10, 50), new LifeBar(lifeLine1, 70, 100)];
-lifeLine1.lineBars = bars;
-
 let lifeLine2 = new LifeLine("test2", app.mainEl, 1);
-let bars2 = [new LifeBar(lifeLine2, 15, 45)];
-lifeLine2.lineBars = bars2;
-
 let lifeLine3 = new LifeLine("test3", app.mainEl, 2);
-
-let lifeLine4 = new LifeLine("test4", app.mainEl, 3);
-
-let lifeLine5 = new LifeLine("test5", app.mainEl, 4);
 
 app.addLifeLine(lifeLine1);
 app.addLifeLine(lifeLine2);
 app.addLifeLine(lifeLine3);
-app.addLifeLine(lifeLine4);
-app.addLifeLine(lifeLine5);
+
+let bar1 = new LifeBar(lifeLine1, 10, 60);
+lifeLine1.lineBars = [bar1];
+let bar2 = new LifeBar(lifeLine2, 30, 35);
+lifeLine2.lineBars = [bar2];
+let bar3 = new LifeBar(lifeLine3, 15, 20);
+lifeLine3.lineBars = [bar3];
+app.render();
+
+let action1 = new Action(10, bar1, bar3, "async", ActionStereotype.asynchronous);
+let action2 = new Action(25, bar1, bar2, "sync", ActionStereotype.synchronous);
+bar1.actions = [action1, action2];
+
+let action3 = new Action(30, bar2, bar1, "reply", ActionStereotype.synchronous);
+bar2.actions = [action3];
+app.render();
+

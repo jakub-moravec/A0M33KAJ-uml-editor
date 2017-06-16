@@ -52,7 +52,6 @@ body {
     width: 200px;
     padding: 1em;
     box-sizing: border-box;
-    -ms-box-sizing: border-box;
 }
 .page footer {
     display: flex;
@@ -98,21 +97,31 @@ div.lifeline div.bar {
     border: solid black 3px;
     background-color: darkgray;
     cursor: pointer;
+    overflow: visible;
 }
 
-div.lifeline div.addBar, div.bar div.removeBar {
-    width: 10px;
-    height: 10px;
+.addButton, .removeButton, .resizeButton {
+    margin-left: 4px;
+    width: 15px;
+    height: 15px;
     cursor: pointer;
     position: absolute;
 }
 
-div.lifeline div.addBar{
-    background-color:  greenyellow;
+.addButton {
+    margin-left: 2px;
+    background: url("../img/add-button.png");
+    background-size: 100%;
 }
 
-div.bar div.removeBar{
-    background-color: red;
+.removeButton{
+    background: url("../img/remove-button.png");
+    background-size: 100%;
+}
+
+.resizeButton{
+    background: url("../img/resize-button.png");
+    background-size: 100%;
 }
 
 div.bar div.resizeBar{
@@ -121,6 +130,49 @@ div.bar div.resizeBar{
     cursor: ns-resize;
 }
 
+/*action*/
+.action{
+    position: absolute;
+    height: auto;
+    width: auto;
+}
+
+.action-name{
+    position: absolute;
+    top: -10px;
+    left: 20px;
+}
+
+.synchronous-line, .asynchronous-line{
+    position: absolute;
+    height: 1px;
+}
+
+.synchronous-line {
+    border-top: solid 3px black;
+}
+
+.asynchronous-line {
+    border-top: dashed 3px black;
+}
+
+.arrow-left, .arrow-right{
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+
+.arrow-right {
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid black;
+}
+
+.arrow-left{
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right:10px solid black;
+}
 /*navigator*/
 
 #navigator ol li {
