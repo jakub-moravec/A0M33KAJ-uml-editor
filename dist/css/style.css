@@ -3,6 +3,14 @@ body {
     margin: 0;
 }
 
+h1, h2 {
+    padding-bottom: 5px;
+}
+
+h2{
+    font-size: larger;
+}
+
 .page {
     display: flex;
     display: -ms-flexbox;
@@ -16,19 +24,8 @@ body {
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 20px;
+    height: 40px;
     background: lightblue;
-}
-
-.page nav {
-    display: flex;
-    display: -ms-flexbox;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 20px;
-    background: lightsalmon;
-    white-space: nowrap;
 }
 
 .page section {
@@ -44,7 +41,7 @@ body {
     flex: 1 auto;
     flex-direction: column;
     -ms-flex-direction: column;
-    background: lightgreen;
+    background: white;
 }
 
 .page section aside {
@@ -59,7 +56,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 20px;
-    background: lightcoral;
+    background: lightblue;
 }
 
 /*lifeline*/
@@ -75,7 +72,7 @@ div.lifeline div.head {
     color: black;
     background-color: beige;
 
-    max-width: 80px;
+    max-width: 110px;
 
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -95,9 +92,21 @@ div.lifeline div.lineDropper{
 div.lifeline div.bar {
     position: absolute;
     border: solid black 3px;
-    background-color: darkgray;
     cursor: pointer;
-    overflow: visible;
+	border-radius: 17px;
+	background: repeating-linear-gradient(
+					45deg,
+					#606dbc,
+					#606dbc 10px,
+					#465298 10px,
+					#465298 20px
+				);
+}
+
+div.lifeline div.bar:hover {
+	outline: none;
+    border-color: #808080;
+    box-shadow: 0 0 10px #808080;
 }
 
 .addButton, .removeButton, .resizeButton {
@@ -128,6 +137,65 @@ div.bar div.resizeBar{
     background-color: blue;
     position: absolute;
     cursor: ns-resize;
+}
+
+
+
+.head {
+	border-radius: 12px;
+}
+
+input[type="submit"], button{
+	float: left;
+	height: 35px;
+	min-width: 70px;
+	border-radius: 8px;
+	margin: 4px;
+	background-color: #606dbc;
+	color: white!important;
+	border: 0;
+}
+
+input[type="submit"]:hover, button:hover{
+	background-color: #7c88d0;
+	outline: 0;
+}
+
+input[type="text"] {
+	margin-bottom: 4px;
+}
+
+label {
+	margin-right: 4px;
+}
+
+#github{
+    position: fixed;
+    width: 300px;
+    height: 50px;
+    margin-right: -100px ;
+    top: 0;
+    right: 0;
+    opacity: 0.5;
+    line-height: 20px;
+    transform: rotate(45deg);
+    background-color: #a9a9a9;
+    transition: opacity 0.5s ease;
+}
+#github:hover {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+#github img {
+	margin-left: 138px;
+    width: 55px;
+    height: 20px;
+}
+
+#github a {
+	font-size: 12px;
+	margin-left: 145px;
 }
 
 /*action*/
